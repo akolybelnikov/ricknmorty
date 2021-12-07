@@ -1,0 +1,14 @@
+p.search-bar {
+    transform: translateX(-25%);
+}
+
+input {
+    margin-block-end: 20px;
+    height: 30px;
+    font-size: 22px;
+    width: 290px;
+}
+
+button.search {
+    height: 35px;
+}

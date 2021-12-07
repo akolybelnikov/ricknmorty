@@ -1,0 +1,42 @@
+div.row {
+    display: flex;
+    position: relative;
+    width: 600px;
+}
+
+div.row > div p {
+    text-align: left;
+    max-width: 300px;
+}
+
+article {
+    width: 0;
+    height: 298px;
+    overflow: visible;
+    -webkit-transition: width .25s linear, opacity .2s linear;
+    transition: width .25s linear, opacity .3s linear;
+    margin-bottom: 0;
+    padding-inline-start: 20px;
+    opacity: 0;
+    left: 300px;
+    border: #FFFFFF 1px solid;
+}
+
+div:last-child article {
+    margin-right: 0;
+}
+
+article p {
+    color: #FFF;
+    font-size: 22px;
+    line-height: 22px;
+    width: 300px;
+    padding-block: 5px;
+    text-align: left;
+}
+
+article.expanded {
+    width: 300px;
+    opacity: 1;
+}
+

@@ -8,7 +8,7 @@ import App from './App'
 
 const client = createClient({
     url: 'https://rickandmortyapi.com/graphql/',
-    requestPolicy: 'cache-first',
+    requestPolicy: 'cache-and-network',
 })
 
 ReactDOM.render(
