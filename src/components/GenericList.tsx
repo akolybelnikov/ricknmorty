@@ -4,6 +4,7 @@ import {useState} from "react";
 const GenericList = <T extends unknown>({
                                             data,
                                             renderItem,
+                                            keyExtractor,
                                             max
                                         }: Props<T>) => {
     const [[min, currMax], setRange] = useState([0, max])
@@ -30,8 +31,8 @@ const GenericList = <T extends unknown>({
 
     return (
         <div>
-            {cp.map((item, idx) => (
-                <div key={idx} className={'item'}>
+            {cp.map((item) => (
+                <div key={keyExtractor(item)} className={'item'}>
                     {renderItem(item)}
                 </div>
             ))}

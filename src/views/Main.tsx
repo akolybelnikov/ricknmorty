@@ -13,6 +13,7 @@ const RicknMortyQuery = `
           count
         }
         results {
+          id
           name
           species
           episode {
@@ -58,10 +59,12 @@ export const Main = () => {
     return (
         <>
             <p className={'search-bar'}>
-                <input onKeyPress={onKeyUp} onChange={(e) => setSearch(e.target.value)} placeholder={'Search by name'} value={input}/>
+                <input onKeyPress={onKeyUp} onChange={(e) => setSearch(e.target.value)} placeholder={'Search by name'}
+                       value={input}/>
                 <button className={'search'} type={"button"} onClick={() => search()}>Search</button>
             </p>
             <GenericList
+                keyExtractor={({id}) => `${id}`}
                 renderItem={(item: Character) => <Item {...item} />}
                 data={data.characters.results} max={5}/>
         </>
