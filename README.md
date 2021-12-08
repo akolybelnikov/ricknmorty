@@ -51,7 +51,15 @@ interface Character {
 We don't have a backend, but we render the data that we fetch from the API with a lightweight and versatile GraphQL client: [urql](https://formidable.com/open-source/urql/docs/basics/react-preact/).
 The library allows us to define a query and fetch the data with the `useQuery` hook in React components.
 
-## To be improved / added (if I had more time)
+## Run the app with Docker
 
-- pagination 
-- error boundary component
+`docker build -t ricknmorty .`
+
+`docker run --rm -it -p 8080:80 ricknmorty`
+
+Navigate to `localhost:8080` in the browser to open the app.
+
+To stop the container execute ctrl-C in the terminal.
+
+
+## To be improved / added (if I had more time)
