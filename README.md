@@ -51,7 +51,28 @@ interface Character {
 We don't have a backend, but we render the data that we fetch from the API with a lightweight and versatile GraphQL client: [urql](https://formidable.com/open-source/urql/docs/basics/react-preact/).
 The library allows us to define a query and fetch the data with the `useQuery` hook in React components.
 
-## Run the app with Docker
+## Run the app
+
+### Local development
+
+To run a local development environment execute `pnpm dev`. 
+
+> `pnpm` is a package manager for JavaScript that is faster and more efficient than npm or yarn.
+> `pnpm` uses a content-addressable filesystem to store your project dependencies. 
+> This way files inside node_modules are linked from a single place on your disk. 
+> Thus, you install each dependency only once and this dependency occupies the space on your disk only once. 
+> In other words, libraries are not copied over for each new project. 
+> This way, on top of being faster than alternatives, `pnpm` provides huge disk space gains.
+
+To install `pnpm` run
+
+```shell
+npm i -g pnpm
+```
+
+### Docker environment
+
+To serve a production ready build in a Docker container
 
 `docker build -t ricknmorty .`
 
@@ -62,4 +83,6 @@ Navigate to `localhost:8080` in the browser to open the app.
 To stop the container execute ctrl-C in the terminal.
 
 
-## To be improved / added (if I had more time)
+## To be improved
+
+- Better UI styling
