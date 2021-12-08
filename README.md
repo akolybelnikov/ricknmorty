@@ -85,4 +85,8 @@ To stop the container execute ctrl-C in the terminal.
 
 ## To be improved
 
+- I tried to clarify the requirement for the generic list component to have a configurable 
+item limit, but couldn't reach anyone. The implementation is my take on the requirement.
+- Generic list item limit could be wired to data pagination in the parent component.
 - Better UI styling
+- add Docker Compose 
