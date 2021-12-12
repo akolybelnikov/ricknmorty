@@ -18,6 +18,8 @@
     "urql": "^2.0.6"
   },
   "devDependencies": {
+    "@angular-devkit/core": "^13.1.1",
+    "@angular-devkit/schematics": "^13.1.1",
     "@nrwl/cli": "13.3.1",
     "@nrwl/cypress": "13.3.1",
     "@nrwl/eslint-plugin-nx": "13.3.1",
@@ -28,6 +30,7 @@
     "@nrwl/tao": "13.3.1",
     "@nrwl/web": "13.3.1",
     "@nrwl/workspace": "13.3.1",
+    "@nx-go/nx-go": "^1.7.1",
     "@testing-library/react": "12.1.2",
     "@testing-library/react-hooks": "7.0.2",
     "@types/jest": "27.0.2",
