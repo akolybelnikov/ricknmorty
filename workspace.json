@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "ricknmorty": "apps/ricknmorty",
+    "ricknmorty-e2e": "apps/ricknmorty-e2e"
+  }
+}

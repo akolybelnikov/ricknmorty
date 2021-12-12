@@ -1,0 +1,28 @@
+{
+  "root": "apps/ricknmorty-e2e",
+  "sourceRoot": "apps/ricknmorty-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/ricknmorty-e2e/cypress.json",
+        "devServerTarget": "ricknmorty:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "ricknmorty:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/ricknmorty-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["ricknmorty"]
+}

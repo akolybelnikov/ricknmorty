@@ -1,0 +1,82 @@
+{
+    "root": "apps/ricknmorty",
+    "sourceRoot": "apps/ricknmorty/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/web:webpack",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "defaultConfiguration": "production",
+            "options": {
+                "outputPath": "dist/apps/ricknmorty",
+                "index": "apps/ricknmorty/src/index.html",
+                "baseHref": "/",
+                "main": "apps/ricknmorty/src/main.tsx",
+                "polyfills": "apps/ricknmorty/src/polyfills.ts",
+                "tsConfig": "apps/ricknmorty/tsconfig.app.json",
+                "assets": [
+                    "apps/ricknmorty/src/favicon.svg",
+                    "apps/ricknmorty/src/assets"
+                ],
+                "styles": [
+                    "apps/ricknmorty/src/styles.css",
+                    "apps/ricknmorty/src/app/components/item.module.css",
+                    "apps/ricknmorty/src/app/views/main.module.css"
+                ],
+                "scripts": [],
+                "webpackConfig": "@nrwl/react/plugins/webpack"
+            },
+            "configurations": {
+                "production": {
+                    "fileReplacements": [{
+                        "replace": "apps/ricknmorty/src/environments/environment.ts",
+                        "with": "apps/ricknmorty/src/environments/environment.prod.ts"
+                    }],
+                    "optimization": true,
+                    "outputHashing": "all",
+                    "sourceMap": false,
+                    "namedChunks": false,
+                    "extractLicenses": true,
+                    "vendorChunk": false
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/web:dev-server",
+            "options": {
+                "buildTarget": "ricknmorty:build",
+                "hmr": true
+            },
+            "configurations": {
+                "production": {
+                    "buildTarget": "ricknmorty:build:production",
+                    "hmr": false
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": [
+                "{options.outputFile}"
+            ],
+            "options": {
+                "lintFilePatterns": [
+                    "apps/ricknmorty/**/*.{ts,tsx,js,jsx}"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": [
+                "coverage/apps/ricknmorty"
+            ],
+            "options": {
+                "jestConfig": "apps/ricknmorty/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": []
+}
