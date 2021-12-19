@@ -11,136 +11,131 @@ import (
 
 	"github.com/akolybelnikov/ricknmorty/graphql-server/graph/generated"
 	"github.com/akolybelnikov/ricknmorty/graphql-server/graph/model"
-	"github.com/akolybelnikov/ricknmorty/graphql-server/helpers"
+	"github.com/akolybelnikov/ricknmorty/graphql-server/http"
 	"github.com/akolybelnikov/ricknmorty/graphql-server/internal/characters"
-	rnm "github.com/pitakill/rickandmortyapigowrapper"
+	"github.com/mitchellh/mapstructure"
 )
 
 func (r *queryResolver) Character(ctx context.Context, id string) (*model.Character, error) {
-	i, err := strconv.Atoi(id)
-	if err != nil {
-		log.Printf("Cannot convert character id: %v", err)
-	}
-	character := characters.GetById(i)
-
-	origin := &model.Location{}
-	if character.Origin.URL == "" {
-		origin = nil
-	} else {
-		originID := helpers.GetLastElementSplitBy(character.Origin.URL, "/")
-		origin, err = r.Location(ctx, originID)
-	}
-
-	location := &model.Location{}
-	if character.Location.URL == "" {
-		location = nil
-	} else {
-		locationID := helpers.GetLastElementSplitBy(character.Location.URL, "/")
-		location, err = r.Location(ctx, locationID)
-	}
-
-	var episodes []*model.Episode
-	rnmEpisodes, err := character.GetEpisodes()
-	if err != nil {
-		log.Printf("Cannot get episodes %v", err)
-	}
-
-	var characters []*string
-
-	for _, rnmEpisode := range *rnmEpisodes {
-		ID := strconv.Itoa(rnmEpisode.ID)
-		for _, rnmCharacter := range rnmEpisode.Characters {
-			characters = append(characters, &rnmCharacter)
-		}
-		episode := model.Episode{
-			ID:         &ID,
-			Name:       &rnmEpisode.Name,
-			AirDate:    &rnmEpisode.Air_Date,
-			Episode:    &rnmEpisode.Episode,
-			Characters: characters,
-			Created:    &rnmEpisode.Created,
-		}
-		episodes = append(episodes, &episode)
-	}
-
-	ID := strconv.Itoa(character.ID)
-	return &model.Character{
-		ID:       &ID,
-		Name:     &character.Name,
-		Status:   &character.Status,
-		Species:  &character.Species,
-		Type:     &character.Type,
-		Gender:   &character.Gender,
-		Origin:   origin,
-		Location: location,
-		Image:    &character.Image,
-		Episode:  episodes,
-		Created:  &character.Created,
-	}, err
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *queryResolver) Characters(ctx context.Context, page *int, filter *model.FilterCharacter) (*model.Characters, error) {
-	id := "1"
-	name := "Rick Sanchez"
-	status := "Alive"
-	species := "Human"
-	stype := ""
-	gender := "Male"
-	oid := "1"
-	oname := "Earth (C-137)"
-	otype := "Planet"
-	odimension := "Dimension C-137"
-	ocreated := "2017-11-10T12:42:04.162Z"
-	lid := "3"
-	lname := "Citadel of Ricks"
-	ltype := "Space station"
-	ldimension := "unknown"
-	lcreated := "2017-11-10T13:08:13.191Z"
-	origin := model.Location{
-		ID:        &oid,
-		Name:      &oname,
-		Type:      &otype,
-		Dimension: &odimension,
-		Created:   &ocreated,
+	options := make(map[string]interface{})
+	if page != nil {
+		options["page"] = strconv.Itoa(*page)
 	}
-	location := model.Location{
-		ID:        &lid,
-		Name:      &lname,
-		Type:      &ltype,
-		Dimension: &ldimension,
-		Created:   &lcreated,
+	if filter != nil {
+		if filter.Name != nil {
+			options["name"] = *filter.Name
+		}
+		if filter.Type != nil {
+			options["type"] = *filter.Type
+		}
+		if filter.Gender != nil {
+			options["gender"] = *filter.Gender
+		}
+		if filter.Species != nil {
+			options["species"] = *filter.Species
+		}
+		if filter.Status != nil {
+			options["status"] = *filter.Status
+		}
 	}
-	eid := "1"
-	ename := "Pilot"
-	airDate := "December 2, 2013"
-	eEpisode := "S01E01"
-	eCreated := "2017-11-10T12:56:33.798Z"
-	episode := model.Episode{
-		ID:      &eid,
-		Name:    &ename,
-		AirDate: &airDate,
-		Episode: &eEpisode,
-		Created: &eCreated,
+	data, err := http.FetchData(http.BaseURL+http.EndpointCharacter, options)
+	if err != nil {
+		log.Printf("Cannot get characters %v", err)
+		return &model.Characters{}, nil
 	}
-	image := "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
-	created := "2017-11-04T18:48:46.250Z"
-	episodes := []*model.Episode{&episode}
-	dummyCharacter := model.Character{
-		ID:       &id,
-		Name:     &name,
-		Status:   &status,
-		Species:  &species,
-		Type:     &stype,
-		Gender:   &gender,
-		Origin:   &origin,
-		Location: &location,
-		Image:    &image,
-		Episode:  episodes,
-		Created:  &created,
+
+	var httpCharacters characters.Characters
+
+	if err = mapstructure.Decode(data, &httpCharacters); err != nil {
+		log.Printf("Cannot map characters from JSON data %v", err)
+		return &model.Characters{}, nil
 	}
-	return &model.Characters{
-		Results: []*model.Character{&dummyCharacter},
-	}, nil
+
+	cs := new(model.Characters)
+
+	info := &model.Info{
+		Count: &httpCharacters.Info.Count,
+		Pages: &httpCharacters.Info.Pages,
+		Next:  &httpCharacters.Info.Next,
+		Prev:  &httpCharacters.Info.Prev,
+	}
+
+	cs.Info = info
+
+	var chars []*model.Character
+
+	for _, character := range httpCharacters.Results {
+		origin := &model.Location{}
+		if character.Origin.URL == "" {
+			origin = nil
+		} else {
+			originData, err := http.FetchData(character.Origin.URL, map[string]interface{}{})
+			if err != nil {
+				log.Printf("Cannot fetch origin %v", err)
+			}
+			if err = mapstructure.Decode(originData, &origin); err != nil {
+				log.Printf("Cannot map origin from JSON data %v", err)
+				return &model.Characters{}, nil
+			}
+		}
+
+		location := &model.Location{}
+		if character.Location.URL == "" {
+			location = nil
+		} else {
+			locationData, err := http.FetchData(character.Location.URL, map[string]interface{}{})
+			if err != nil {
+				log.Printf("Cannot fetch location %v", err)
+			}
+			if err = mapstructure.Decode(locationData, &location); err != nil {
+				log.Printf("Cannot map location from JSON data %v", err)
+				return &model.Characters{}, nil
+			}
+		}
+
+		var episodes []*model.Episode
+		if len(character.Episode) > 0 {
+			var episode model.Episode
+			episodeData, err := http.FetchData(character.Episode[0], map[string]interface{}{})
+			if err != nil {
+				log.Printf("Cannot fetch episode %v", err)
+			}
+			if err = mapstructure.Decode(episodeData, &episode); err != nil {
+				log.Printf("Cannot map episode from JSON data %v", err)
+				return &model.Characters{}, nil
+			}
+
+			episodes = append(episodes, &episode)
+		}
+
+		c := new(model.Character)
+		ID := character.ID
+		c.ID = &ID
+		name := character.Name
+		c.Name = &name
+		status := character.Status
+		c.Status = &status
+		species := character.Species
+		c.Species = &species
+		ctype := character.Type
+		c.Type = &ctype
+		gender := character.Gender
+		c.Gender = &gender
+		c.Origin = origin
+		c.Location = location
+		c.Episode = episodes
+		image := character.Image
+		c.Image = &image
+		created := character.Created
+		c.Created = &created
+		chars = append(chars, c)
+	}
+	cs.Results = chars
+	return cs, nil
 }
 
 func (r *queryResolver) CharactersByIds(ctx context.Context, ids []string) ([]*model.Character, error) {
@@ -148,35 +143,7 @@ func (r *queryResolver) CharactersByIds(ctx context.Context, ids []string) ([]*m
 }
 
 func (r *queryResolver) Location(ctx context.Context, id string) (*model.Location, error) {
-	intId, err := strconv.Atoi(id)
-	if err != nil {
-		log.Printf("Cannot convert location id %v", err)
-	}
-	rnmLocation, err := rnm.GetLocation(intId)
-	if err != nil {
-		log.Printf("Cannot get location %v", err)
-	}
-	lId := strconv.Itoa(rnmLocation.ID)
-	rnmResidents, err := rnmLocation.GetResidents()
-	if err != nil {
-		log.Printf("Cannot get residents %v", err)
-	}
-
-	var residents []*string
-	for _, resident := range *rnmResidents {
-		resId := strconv.Itoa(resident.ID)
-		residents = append(residents, &resId)
-	}
-
-	location := &model.Location{
-		ID:        &lId,
-		Name:      &rnmLocation.Name,
-		Type:      &rnmLocation.Type,
-		Dimension: &rnmLocation.Dimension,
-		Residents: residents,
-		Created:   &rnmLocation.Created,
-	}
-	return location, err
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *queryResolver) Locations(ctx context.Context, page *int, filter *model.FilterLocation) (*model.Locations, error) {
@@ -188,27 +155,7 @@ func (r *queryResolver) LocationsByIds(ctx context.Context, ids []string) ([]*mo
 }
 
 func (r *queryResolver) Episode(ctx context.Context, id string) (*model.Episode, error) {
-	intId, err := strconv.Atoi(id)
-	if err != nil {
-		log.Printf("Cannot convert episode id %v", err)
-	}
-	rnmEpisode, err := rnm.GetEpisode(intId)
-	episodeID := strconv.Itoa(rnmEpisode.ID)
-	var characters []*string
-	for _, c := range rnmEpisode.Characters {
-		characters = append(characters, &c)
-	}
-
-	episode := &model.Episode{
-		ID:         &episodeID,
-		Name:       &rnmEpisode.Name,
-		AirDate:    &rnmEpisode.Air_Date,
-		Episode:    &rnmEpisode.Episode,
-		Characters: characters,
-		Created:    &rnmEpisode.Created,
-	}
-
-	return episode, err
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *queryResolver) Episodes(ctx context.Context, page *int, filter *model.FilterEpisode) (*model.Episodes, error) {

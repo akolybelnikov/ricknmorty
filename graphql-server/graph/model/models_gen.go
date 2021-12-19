@@ -9,7 +9,7 @@ import (
 )
 
 type Character struct {
-	ID       *string    `json:"id"`
+	ID       *float64   `json:"id"`
 	Name     *string    `json:"name"`
 	Status   *string    `json:"status"`
 	Species  *string    `json:"species"`
@@ -28,7 +28,7 @@ type Characters struct {
 }
 
 type Episode struct {
-	ID         *string   `json:"id"`
+	ID         *float64  `json:"id"`
 	Name       *string   `json:"name"`
 	AirDate    *string   `json:"air_date"`
 	Episode    *string   `json:"episode"`
@@ -61,14 +61,14 @@ type FilterLocation struct {
 }
 
 type Info struct {
-	Count *int `json:"count"`
-	Pages *int `json:"pages"`
-	Next  *int `json:"next"`
-	Prev  *int `json:"prev"`
+	Count *int    `json:"count"`
+	Pages *int    `json:"pages"`
+	Next  *string `json:"next"`
+	Prev  *string `json:"prev"`
 }
 
 type Location struct {
-	ID        *string   `json:"id"`
+	ID        *float64  `json:"id"`
 	Name      *string   `json:"name"`
 	Type      *string   `json:"type"`
 	Dimension *string   `json:"dimension"`

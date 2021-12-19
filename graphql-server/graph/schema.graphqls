@@ -9,7 +9,7 @@ enum CacheControlScope {
 
 type Character {
   # The id of the character.
-  id: ID
+  id: Float
   # The name of the character.
   name: String
   # The status of the character ('Alive', 'Dead' or 'unknown').
@@ -40,7 +40,7 @@ type Characters {
 
 type Episode {
   # The id of the episode.
-  id: ID
+  id: Float
   # The name of the episode.
   name: String
   # The air date of the episode.
@@ -83,14 +83,14 @@ type Info {
   # The amount of pages.
   pages: Int
   # Number of the next page (if it exists)
-  next: Int
+  next: String
   # Number of the previous page (if it exists)
-  prev: Int
+  prev: String
 }
 
 type Location {
   # The id of the location.
-  id: ID
+  id: Float
   # The name of the location.
   name: String
   # The type of the location.

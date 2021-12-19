@@ -1,0 +1,27 @@
+version: '3'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    stdin_open: true
+    tty: true
+    command:
+      - ./server
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    container_name: react-ui
+    stdin_open: true
+    volumes:
+      - ./app:/app
+      - /app/node_modules/
+    depends_on:
+      - server
+    working_dir: /app
+    command: npm run preview --host

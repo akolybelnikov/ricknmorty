@@ -536,7 +536,7 @@ enum CacheControlScope {
 
 type Character {
   # The id of the character.
-  id: ID
+  id: Float
   # The name of the character.
   name: String
   # The status of the character ('Alive', 'Dead' or 'unknown').
@@ -567,7 +567,7 @@ type Characters {
 
 type Episode {
   # The id of the episode.
-  id: ID
+  id: Float
   # The name of the episode.
   name: String
   # The air date of the episode.
@@ -610,14 +610,14 @@ type Info {
   # The amount of pages.
   pages: Int
   # Number of the next page (if it exists)
-  next: Int
+  next: String
   # Number of the previous page (if it exists)
-  prev: Int
+  prev: String
 }
 
 type Location {
   # The id of the location.
-  id: ID
+  id: Float
   # The name of the location.
   name: String
   # The type of the location.
@@ -933,9 +933,9 @@ func (ec *executionContext) _Character_id(ctx context.Context, field graphql.Col
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*float64)
 	fc.Result = res
-	return ec.marshalOID2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOFloat2ᚖfloat64(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Character_name(ctx context.Context, field graphql.CollectedField, obj *model.Character) (ret graphql.Marshaler) {
@@ -1352,9 +1352,9 @@ func (ec *executionContext) _Episode_id(ctx context.Context, field graphql.Colle
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*float64)
 	fc.Result = res
-	return ec.marshalOID2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOFloat2ᚖfloat64(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Episode_name(ctx context.Context, field graphql.CollectedField, obj *model.Episode) (ret graphql.Marshaler) {
@@ -1675,9 +1675,9 @@ func (ec *executionContext) _Info_next(ctx context.Context, field graphql.Collec
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*int)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Info_prev(ctx context.Context, field graphql.CollectedField, obj *model.Info) (ret graphql.Marshaler) {
@@ -1707,9 +1707,9 @@ func (ec *executionContext) _Info_prev(ctx context.Context, field graphql.Collec
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*int)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Location_id(ctx context.Context, field graphql.CollectedField, obj *model.Location) (ret graphql.Marshaler) {
@@ -1739,9 +1739,9 @@ func (ec *executionContext) _Location_id(ctx context.Context, field graphql.Coll
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*float64)
 	fc.Result = res
-	return ec.marshalOID2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOFloat2ᚖfloat64(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Location_name(ctx context.Context, field graphql.CollectedField, obj *model.Location) (ret graphql.Marshaler) {
@@ -4836,19 +4836,19 @@ func (ec *executionContext) unmarshalOFilterLocation2ᚖgithubᚗcomᚋakolybeln
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalOID2ᚖstring(ctx context.Context, v interface{}) (*string, error) {
+func (ec *executionContext) unmarshalOFloat2ᚖfloat64(ctx context.Context, v interface{}) (*float64, error) {
 	if v == nil {
 		return nil, nil
 	}
-	res, err := graphql.UnmarshalID(v)
+	res, err := graphql.UnmarshalFloat(v)
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOID2ᚖstring(ctx context.Context, sel ast.SelectionSet, v *string) graphql.Marshaler {
+func (ec *executionContext) marshalOFloat2ᚖfloat64(ctx context.Context, sel ast.SelectionSet, v *float64) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	return graphql.MarshalID(*v)
+	return graphql.MarshalFloat(*v)
 }
 
 func (ec *executionContext) marshalOInfo2ᚖgithubᚗcomᚋakolybelnikovᚋricknmortyᚋgraphqlᚑserverᚋgraphᚋmodelᚐInfo(ctx context.Context, sel ast.SelectionSet, v *model.Info) graphql.Marshaler {

@@ -5,15 +5,12 @@ import (
 )
 
 type Location struct {
-	ID        *string      `json:"id"`
-	Name      *string      `json:"name"`
-	Type      *string      `json:"type"`
-	Dimension *string      `json:"dimension"`
-	Residents []*string `json:"residents"`
-	Created   *string      `json:"created"`
+	Name      string      `json:"name"`
+	URL      string      `json:"url"`
 }
 
 type Locations struct {
-	Info    *info.Info       `json:"info"`
+	Info    info.Info       `json:"info"`
 	Results []*Location `json:"results"`
 }
+
