@@ -1,31 +1,39 @@
 body {
-  background-color: #282c34;
+    background-color: #282c34;
 }
 
 .App {
-  text-align: center;
-  background-color: #282c34;
+    text-align: center;
+    background-color: #282c34;
+    position: relative;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  padding-block: 50px;
-  min-height: 100vh;
+header, footer {
+    position: fixed;
+    width: 100vw;
+    z-index: 1;
+    background-color: #282c34;
+    padding-block: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+header {
+    top: 0;
+}
+
+footer {
+    bottom: 0;
 }
 
 button {
-  font-size: calc(10px + 2vmin);
-  margin-inline: 10px;
-  padding-inline: 10px;
+    font-size: calc(10px + 2vmin);
+    margin-inline: 10px;
+    padding-inline: 10px;
 }
 
 div.item > div > p {
-  height: 20px;
+    height: 20px;
 }

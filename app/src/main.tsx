@@ -7,7 +7,8 @@ import App from './App'
 
 
 const client = createClient({
-    url: 'http://localhost:8080/graphql',
+    //url: 'http://localhost:8080/graphql',
+    url: 'https://rickandmortyapi.com/graphql',
     requestPolicy: 'cache-and-network',
 })
 
