@@ -16,12 +16,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
-    container_name: react-ui
-    stdin_open: true
+    links:
+      - server
     volumes:
       - ./app:/app
       - /app/node_modules/
     depends_on:
       - server
     working_dir: /app
-    command: npm run preview --host
+    command: npm run preview

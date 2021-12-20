@@ -1,11 +1,11 @@
 import React, {ChangeEvent} from "react";
-import {SBProps} from "../interfaces/SBProps";
+import {SearchBarProps} from "../interfaces/SearchBarProps";
 
-const SearchBar: React.FC<SBProps> = ({onKeyUp, input, setSearch, search}) => {
+const SearchBar: React.FC<SearchBarProps> = ({onKeyUp, input, setSearch, search}: SearchBarProps) => {
     return (
         <p className={'search-bar'} role={'toolbar'}>
             <input onKeyPress={onKeyUp} onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-                   placeholder={'Search by name'}
+                   placeholder={'Search characters by name'}
                    value={input}/>
             <button className={'search'} type={"button"} onClick={() => search()}>Search</button>
         </p>

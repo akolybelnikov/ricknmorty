@@ -16,6 +16,7 @@ const Item: React.FC<Character> = ({name, species, image, episode, status, origi
                 <p className={'origin'}>Origin: {origin.name}</p>
                 <p className={'location'}>Location: {location.name}</p>
             </div>
+
             <p className={'more'}
                onClick={() => expand()}>{`>`}
             </p>

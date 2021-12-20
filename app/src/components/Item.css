@@ -52,6 +52,7 @@ span.alive {
 p.more {
     font-size: calc(10px + 3vmin);
     flex: 1 1 5%;
+    padding-inline: 20px;
 }
 
 div.collapsed {
