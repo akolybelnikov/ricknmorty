@@ -1,4 +1,5 @@
 import {Episode} from "./Episode";
+import {Location} from "./Location";
 
 export interface Character {
     id: number;
@@ -7,4 +8,7 @@ export interface Character {
     image: string;
     episode: Episode[];
     created: string;
+    status: string;
+    origin: Location;
+    location: Location;
 }

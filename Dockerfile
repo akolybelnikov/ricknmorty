@@ -1,27 +1,20 @@
-FROM node:14.18-alpine as builder
+FROM golang:1.17-alpine
 
-WORKDIR /app
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh
 
-COPY package.json /app/package.json
+WORKDIR /go/src/app
 
-ENV PATH /app/node_modules/.bin:$PATH
+COPY go.mod go.sum ./
 
-RUN npm install
+RUN go mod download
 
-COPY . .
+COPY graphql-server ./graphql-server
 
-RUN npm run build
+WORKDIR /go/src/app/graphql-server
 
-FROM nginx:alpine
+RUN go build -o server .
 
-#!/bin/sh
+EXPOSE 8080
 
-COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
-
-RUN rm -rf /usr/share/nginx/html/*
-
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-EXPOSE 3000 80
-
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+CMD ["./server"]

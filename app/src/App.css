@@ -1,0 +1,69 @@
+body {
+    background-color: #282c34;
+}
+
+.App {
+    text-align: center;
+    background-color: #282c34;
+    position: relative;
+}
+
+header, footer {
+    position: fixed;
+    width: 100vw;
+    z-index: 1;
+    background-color: #282c34;
+    padding-block: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+header {
+    top: 0;
+}
+
+footer {
+    bottom: 0;
+}
+
+select {
+    padding: 2px;
+    font-size: 20px;
+}
+
+button {
+    font-size: 22px;
+    margin-inline: 10px;
+    padding-inline: 10px;
+}
+
+input {
+    font-size: 20px;
+    width: 290px;
+    border-radius: 5px;
+    height: 30px;
+}
+
+button.search {
+    height: 32px;
+    font-size: 20px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 1.25vmin);
+    color: white;
+    margin-block: 100px;
+    z-index: 2;
+    max-width: 100%;
+    overflow: hidden;
+}
+@media (max-width: 600px) {
+    main {
+    }
+}

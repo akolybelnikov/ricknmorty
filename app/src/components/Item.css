@@ -1,0 +1,85 @@
+article.row {
+    display: flex;
+    position: relative;
+    width: 75vw;
+    height: 200px;
+    overflow: hidden;
+    background: rgb(60, 62, 68) none repeat scroll 0 0;
+    border-radius: 0.5rem;
+    margin: 0.75rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 6px -1px, rgba(0, 0, 0, 0.06) 0 2px 4px -1px;
+    align-items: center;
+}
+
+img {
+    width: 200px;
+    height: 200px;
+}
+
+@media (max-width: 600px) {
+    img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+article > div {
+    padding: 5px;
+}
+
+h4 {
+    text-align: left;
+    margin-block: 5px;
+}
+
+div.base-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-content: center;
+    padding-inline-start: 10px;
+    flex: 1 1 70%;
+}
+
+span.dead {
+    color: red;
+}
+
+span.alive {
+    color: green;
+}
+
+p.more {
+    font-size: calc(10px + 3vmin);
+    flex: 1 1 5%;
+    padding-inline: 20px;
+}
+
+div.collapsed {
+    width: 0;
+    overflow: hidden;
+    transition: width .25s linear, height .25s linear, opacity .3s linear;
+    -webkit-transition: width .25s linear, height .25s linear, opacity .2s linear;
+    margin-bottom: 0;
+    opacity: 0;
+    height: 100%;
+    right: 0;
+    padding: 0;
+}
+
+article p {
+    color: #FFF;
+    font-size: inherit;
+    text-align: left;
+    margin-block-end: 5px;
+    margin-block-start: 0;
+}
+
+div.expanded {
+    width: 70%;
+    opacity: 1;
+    padding-inline-start: 20px;
+    transition: width .25s linear, height .25s linear, opacity .3s linear;
+    -webkit-transition: width .25s linear, height .25s linear, opacity .2s linear;
+}
+
