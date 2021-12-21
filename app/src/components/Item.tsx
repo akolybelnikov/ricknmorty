@@ -13,8 +13,8 @@ const Item: React.FC<Character> = ({name, species, image, episode, status, origi
             <div className={'base-info'}>
                 <h4 className={'name'}>{name}</h4>
                 <p><span className={`${status == 'Dead' ? 'dead' : 'alive'}`}>{status}</span> - <span className={'species'}>{species}</span></p>
-                <p className={'origin'}>Origin: {origin.name}</p>
-                <p className={'location'}>Location: {location.name}</p>
+                <p className={'origin'}>Origin: {origin?.name}</p>
+                <p className={'location'}>Location: {location?.name}</p>
             </div>
 
             <p className={'more'}
@@ -22,10 +22,10 @@ const Item: React.FC<Character> = ({name, species, image, episode, status, origi
             </p>
 
             <div className={`${info ? 'expanded' : 'collapsed'}`}>
-                <p>First appeared in: <span>{episode[0].episode}</span></p>
-                <p>Aired on: <span>{episode[0].air_date}</span></p>
-                <p>Episode name: <span>{episode[0].name}</span></p>
-                <p>Appeared in: <span>{episode.length}</span> episode(s)</p>
+                <p>First appeared in: <span>{episode[0]?.episode}</span></p>
+                <p>Aired on: <span>{episode[0]?.air_date}</span></p>
+                <p>Episode name: <span>{episode[0]?.name}</span></p>
+                <p>Appeared in: <span>{episode?.length}</span> episode(s)</p>
             </div>
         </article>
     )

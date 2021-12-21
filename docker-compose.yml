@@ -6,22 +6,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    stdin_open: true
-    tty: true
     command:
       - ./server
   app:
-    build:
-      context: ./app
-      dockerfile: Dockerfile
+    build: ./app
     ports:
-      - "5000:5000"
-    links:
-      - server
-    volumes:
-      - ./app:/app
-      - /app/node_modules/
+      - "3000:80"
     depends_on:
       - server
-    working_dir: /app
-    command: npm run preview
